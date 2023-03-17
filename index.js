@@ -100,8 +100,12 @@ app.post(`/api/v1/product`, async (req, res, next) => {
     console.log(req.body);
 
     const product = new Product(req.body);
-
     const result = await product.save();
+
+    // instance creation
+    if(product.quantity === 0){
+      product.status = `out of stock`
+    }
 
     res.status(200).send({
       status: `success`,
