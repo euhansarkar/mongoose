@@ -50,6 +50,7 @@ const productSchema = mongoose.Schema(
           }
         },
       },
+      message: "quantity must be an integer",
     },
     status: {
       type: String,
@@ -68,7 +69,7 @@ const productSchema = mongoose.Schema(
       default: Date.now(),
     },
     supplier: {
-      type: mongoose.Schema.Types.ObjectId(),
+      type: mongoose.Schema.Types.ObjectId,
       ref: "supplier",
     },
     categories: [
@@ -77,15 +78,43 @@ const productSchema = mongoose.Schema(
           type: String,
           required: true,
         },
-        _id: mongoose.Schema.Types.ObjectId(),
+        _id: mongoose.Schema.Types.ObjectId,
       },
     ],
   },
   { timestamps: true }
 );
 
+// SCHEMA  =>  MODEL  =>  QUERY
+
+const Product = mongoose.model(`Product`, productSchema);
+
 app.get(`/`, (req, res) => {
   res.send(`Route is Working`.red.bold);
+});
+
+// posting to database
+app.post(`/api/v1/product`, async (req, res, next) => {
+  try {
+    // we can save or create to insert a data
+    console.log(req.body);
+
+    const product = new Product(req.body);
+
+    const result = await product.save();
+
+    res.status(200).send({
+      status: `success`,
+      message: `data inserted successful`,
+      data: result,
+    });
+  } catch (err) {
+    res.status(400).send({
+      status: `failed`,
+      message: `data is not inserted`,
+      data: err.message,
+    });
+  }
 });
 
 module.exports = app;
