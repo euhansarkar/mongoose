@@ -1,7 +1,12 @@
-const { getProductsServices, postProductsServices } = require("../services/product.services");
+const Product = require("../models/Product.model");
+const {
+  getProductsServices,
+  postProductsServices,
+  updateProductServices,
+} = require("../services/product.services");
 
 module.exports.getProducts = async (req, res, next) => {
-  try { 
+  try {
     const products = await getProductsServices();
 
     res.status(200).json({
@@ -20,7 +25,6 @@ module.exports.getProducts = async (req, res, next) => {
 
 module.exports.postProducts = async (req, res, next) => {
   try {
-   
     const result = await postProductsServices(req.body);
     res.status(200).json({
       status: `success`,
@@ -31,7 +35,26 @@ module.exports.postProducts = async (req, res, next) => {
     res.status(400).json({
       status: `failed`,
       message: `data is not inserted`,
-      data: err.message,
+      error: err.message,
+    });
+  }
+};
+
+module.exports.updateProduct = async (req, res, next) => {
+  try {
+    const productId = req.params.id;
+    const result = await updateProductServices(productId, req.body);
+
+    res.status(200).json({
+      status: `success`,
+      message: `product updated`,
+      data: result,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: `failed`,
+      message: `product could't updated`,
+      error: err.message,
     });
   }
 };
