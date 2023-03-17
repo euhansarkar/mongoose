@@ -13,6 +13,6 @@ app.get(`/`, (req, res) => {
   res.send(`Route is Working`.red.bold);
 });
 
-app.use(`/api/v1/product`, productRoutes);
+app.use('/api/v1/product', productRoutes);
 
 module.exports = app;

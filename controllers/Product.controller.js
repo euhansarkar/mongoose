@@ -21,15 +21,16 @@ module.exports.getProducts = async (req, res, next) => {
 
     // what is the difference between find and findById ?
     // find দিলে empty array return করে। undefined দিলে null return করে।
-    const products = await Product.find({ _id: undefined });
+   
+    const products = await Product.find({});
 
-    res.status(200).send({
+    res.status(200).json({
       status: `success`,
       message: `data get successful`,
       data: products,
     });
   } catch (err) {
-    res.status(400).send({
+    res.status(400).json({
       status: `failed`,
       message: `cannot get data`,
       error: err.message,
@@ -46,7 +47,7 @@ module.exports.postProducts = async (req, res, next) => {
     const result = await product.save();
 
     // logger method calling
-    result.logger();
+    // result.logger();
 
     // const result = await Product.create(req.body);
 
@@ -55,13 +56,13 @@ module.exports.postProducts = async (req, res, next) => {
     //   product.status = `out of stock`;
     // }
 
-    res.status(200).send({
+    res.status(200).json({
       status: `success`,
       message: `data inserted successful`,
       data: result,
     });
   } catch (err) {
-    res.status(400).send({
+    res.status(400).json({
       status: `failed`,
       message: `data is not inserted`,
       data: err.message,

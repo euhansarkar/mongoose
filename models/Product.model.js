@@ -104,3 +104,5 @@ const productSchema = mongoose.Schema(
   // SCHEMA  =>  MODEL  =>  QUERY
   
   const Product = mongoose.model(`Product`, productSchema);
+
+  module.exports = Product;
