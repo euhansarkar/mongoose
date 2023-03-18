@@ -1,10 +1,10 @@
 const Product = require(`../models/Product.model`);
 
 module.exports.getProductsServices = async (filters, queries) => {
-  console.log(`from services`, queries.fields);
+  console.log(`from services`, filters);
   const products = await Product.find(filters)
-    .select(queries.fields)
-    .sort(queries.sortBy);
+    // .select(queries.fields)
+    // .sort(queries.sortBy);
   return products;
 };
 

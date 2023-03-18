@@ -9,21 +9,32 @@ const {
 
 module.exports.getProducts = async (req, res, next) => {
   try {
-    const filters = { ...req.query };
+    let filters = { ...req.query };
     const excludeFields = [`page`, `sort`, `limit`];
     excludeFields.forEach((field) => delete filters[field]);
 
+    // { price: { $gt: '1460' } }
+    // { price: { gt: '1460' } }
+
+    let filterString = JSON.stringify(filters);
+    filterString = filterString.replace(
+      /\b(gt|gte|lt|lte)\b/g,
+      (match) => `$${match}`
+    );
+    
+    filters = JSON.parse(filterString);
+      console.log(filters);
     const queries = {};
     if (req.query.sort) {
       const sortBy = req.query.sort.replaceAll(`,`, ` `);
       queries.sortBy = sortBy;
     }
-    
+
     if (req.query.fields) {
       const fields = req.query.fields.split(`,`).join(` `);
       queries.fields = fields;
     }
-    
+
     const products = await getProductsServices(filters, queries);
 
     res.status(200).json({
