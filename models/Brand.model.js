@@ -12,7 +12,7 @@ const brandSchema = mongoose.Schema(
       unique: true,
       minLength: 3,
       maxLength: 100,
-      lowerCase: true,
+      lowercase: true,
     },
     description: {
       type: String,
@@ -24,7 +24,7 @@ const brandSchema = mongoose.Schema(
       unique: true,
       minLength: 8,
       maxLength: 50,
-      lowerCase: true,
+      lowercase: true,
       validate: [validator.isEmail, "please provide a valid Email"],
     },
     website: {
