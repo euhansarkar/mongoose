@@ -3,6 +3,7 @@ const {
   getProductsServices,
   postProductsServices,
   updateProductServices,
+  bulkUpdateProductServices,
 } = require("../services/product.services");
 
 module.exports.getProducts = async (req, res, next) => {
@@ -58,3 +59,26 @@ module.exports.updateProduct = async (req, res, next) => {
     });
   }
 };
+
+
+module.exports.bulkUpdateProduct = async(req, res, next) => {
+  try{
+
+    const products = await bulkUpdateProductServices(req.body);
+    
+
+    res.status(200).json({
+      status: `success`,
+      message: `products successfully updated`,
+      data: products
+    })
+
+
+  }catch(err){
+    res.status(400).json({
+      status: `failed`,
+      message: `product could'nt updated`,
+      error: err.message
+    })
+  }
+}
