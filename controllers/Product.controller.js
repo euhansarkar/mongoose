@@ -4,11 +4,17 @@ const {
   postProductsServices,
   updateProductServices,
   bulkUpdateProductServices,
+  bulkDeleteProductServices,
 } = require("../services/product.services");
 
 module.exports.getProducts = async (req, res, next) => {
   try {
-    const products = await getProductsServices();
+    console.log(req.query);
+    const originalObject = {...req.query};
+    const excludeFields = [`page`, `sort`, `limit`];
+    excludeFields.forEach(field => delete originalObject[field])
+    console.log(originalObject);
+    const products = await getProductsServices(originalObject);
 
     res.status(200).json({
       status: `success`,
@@ -78,6 +84,26 @@ module.exports.bulkUpdateProduct = async(req, res, next) => {
     res.status(400).json({
       status: `failed`,
       message: `product could'nt updated`,
+      error: err.message
+    })
+  }
+}
+
+
+module.exports.bulkDeleteProduct = async(req, res, next) => {
+  try{
+    
+    const result = await bulkDeleteProductServices();
+
+    res.status(200).json({
+      status: `success`,
+      message: `all products deleted successfully`,
+      data: result
+    })
+  }catch(err){
+    res.status(400).json({
+      status: `failed`,
+      message: `products could'nt deleted`,
       error: err.message
     })
   }

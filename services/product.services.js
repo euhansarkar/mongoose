@@ -1,7 +1,7 @@
 const Product = require(`../models/Product.model`);
 
-module.exports.getProductsServices = async () => {
-  const products = await Product.find({});
+module.exports.getProductsServices = async (query) => {
+  const products = await Product.find(query);
   return products;
 };
 
@@ -47,7 +47,14 @@ module.exports.bulkUpdateProductServices = async (data) => {
     products.push(Product.updateOne({ _id: product.id }, product.data))
   );
 
-  const result = await Promise.all(products);
+
+  // const result = await Promise.all(products);
 
   return result;
 };
+
+
+module.exports.bulkDeleteProductServices = async(req, res, next) => {
+  const products = await Product.deleteMany({});
+  return products;
+}
