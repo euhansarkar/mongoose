@@ -9,6 +9,7 @@ specifiers:
   jsonwebtoken: ^9.0.0
   mongoose: ^7.0.2
   nodemon: ^2.0.21
+  validator: ^13.9.0
 
 dependencies:
   bcrypt: 5.1.0
@@ -18,6 +19,7 @@ dependencies:
   express: 4.18.2
   jsonwebtoken: 9.0.0
   mongoose: 7.0.2
+  validator: 13.9.0
 
 devDependencies:
   nodemon: 2.0.21
@@ -1152,6 +1154,11 @@ packages:
   /utils-merge/1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
+    dev: false
+
+  /validator/13.9.0:
+    resolution: {integrity: sha512-B+dGG8U3fdtM0/aNK4/X8CXq/EcxU2WPrPEkJGslb47qyHsxmbggTWK0yEA4qnYVNF+nxNlN88o14hIcPmSIEA==}
+    engines: {node: '>= 0.10'}
     dev: false
 
   /vary/1.1.2:
