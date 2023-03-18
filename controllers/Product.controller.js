@@ -9,12 +9,22 @@ const {
 
 module.exports.getProducts = async (req, res, next) => {
   try {
-    console.log(req.query);
-    const originalObject = {...req.query};
+    const filters = { ...req.query };
     const excludeFields = [`page`, `sort`, `limit`];
-    excludeFields.forEach(field => delete originalObject[field])
-    console.log(originalObject);
-    const products = await getProductsServices(originalObject);
+    excludeFields.forEach((field) => delete filters[field]);
+
+    const queries = {};
+    if (req.query.sort) {
+      const sortBy = req.query.sort.replaceAll(`,`, ` `);
+      queries.sortBy = sortBy;
+    }
+    
+    if (req.query.fields) {
+      const fields = req.query.fields.split(`,`).join(` `);
+      queries.fields = fields;
+    }
+    
+    const products = await getProductsServices(filters, queries);
 
     res.status(200).json({
       status: `success`,
@@ -66,45 +76,38 @@ module.exports.updateProduct = async (req, res, next) => {
   }
 };
 
-
-module.exports.bulkUpdateProduct = async(req, res, next) => {
-  try{
-
+module.exports.bulkUpdateProduct = async (req, res, next) => {
+  try {
     const products = await bulkUpdateProductServices(req.body);
-    
 
     res.status(200).json({
       status: `success`,
       message: `products successfully updated`,
-      data: products
-    })
-
-
-  }catch(err){
+      data: products,
+    });
+  } catch (err) {
     res.status(400).json({
       status: `failed`,
       message: `product could'nt updated`,
-      error: err.message
-    })
+      error: err.message,
+    });
   }
-}
+};
 
-
-module.exports.bulkDeleteProduct = async(req, res, next) => {
-  try{
-    
+module.exports.bulkDeleteProduct = async (req, res, next) => {
+  try {
     const result = await bulkDeleteProductServices();
 
     res.status(200).json({
       status: `success`,
       message: `all products deleted successfully`,
-      data: result
-    })
-  }catch(err){
+      data: result,
+    });
+  } catch (err) {
     res.status(400).json({
       status: `failed`,
       message: `products could'nt deleted`,
-      error: err.message
-    })
+      error: err.message,
+    });
   }
-}
+};
