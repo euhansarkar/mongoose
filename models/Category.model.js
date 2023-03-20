@@ -1,6 +1,6 @@
 const mongoose = require(`mongoose`);
 const { ObjectId } = mongoose.Schema.Types;
-
+const validator = require(`validator`);
 // category schema creation
 
 const categorySchema = mongoose.Schema(

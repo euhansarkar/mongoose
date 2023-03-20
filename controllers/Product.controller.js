@@ -1,4 +1,4 @@
-const Product = require("../models/Product.model");
+
 const {
   getProductsServices,
   postProductsServices,
@@ -8,7 +8,7 @@ const {
 } = require("../services/product.services");
 
 module.exports.getProducts = async (req, res, next) => {
-  try {
+  try { 
     let filters = { ...req.query };
     const excludeFields = [`page`, `sort`, `limit`];
     excludeFields.forEach((field) => delete filters[field]);
@@ -138,3 +138,19 @@ module.exports.bulkDeleteProduct = async (req, res, next) => {
     });
   }
 };
+
+
+module.exports.fileUpload = async(req, res, next) => {
+  try {
+
+
+
+    res.status(200).json({
+      status: `successs`,
+      message: `file uploaded successfully`,
+      data: req.files
+    })
+  } catch (error) {
+    
+  }
+}

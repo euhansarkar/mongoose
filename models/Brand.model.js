@@ -5,6 +5,12 @@ const { ObjectId } = mongoose.Schema.Types;
 //  schema creation
 const brandSchema = mongoose.Schema(
   {
+    products: [
+      {
+        type: ObjectId,
+        ref: "Product",
+      },
+    ],
     name: {
       type: String,
       trim: true,
@@ -34,12 +40,6 @@ const brandSchema = mongoose.Schema(
       validate: [validator.isURL, "please provide a valid URL"],
     },
     location: String,
-    products: [
-      {
-        type: ObjectId,
-        ref: "Product",
-      },
-    ],
     supplier: [
       {
         name: String,

@@ -1,4 +1,6 @@
 const mongoose = require(`mongoose`);
+const {ObjectId} = mongoose.Schema.Types;
+const validator = require(`validator`)
 // mongoose product design schema
 
 // price, quantity and status remove due to refectoring module 8.4
@@ -26,27 +28,12 @@ const productSchema = mongoose.Schema(
         message: "unit value can't be {VALUE}, must be kg/litre/pcs/bag",
       },
     },
-    imageURLs: [
-      {
-        type: String,
-        required: true,
-        validate: {
-          validator: (value) => {
-            if (!Array.isArray(value)) {
-              return false;
-            }
-            let isValid = true;
-            value.forEach((val) => {
-              if (!validator.isURL(val)) {
-                isValid = false;
-              }
-            });
-            return isValid;
-          },
-        },
-      },
-    ],
-    cateogry: {
+    imageURLs: [{
+      type: String,
+      required: true,
+      validate: [validator.isURL, "wrong url"]
+    }],
+    category: {
       type: String,
       required: true,
     },
