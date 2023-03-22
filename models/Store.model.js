@@ -30,7 +30,7 @@ const storeSchema = mongoose.Schema({
             contactNumber: String,
             id: {
                 type: ObjectId,
-                ref: "User"
+                ref: "User0"
             }
         }
 }, {timestamps: true})

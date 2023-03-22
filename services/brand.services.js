@@ -6,7 +6,7 @@ module.exports.postBrandsService = async (data) => {
 };
 
 module.exports.getBrandsService = async () => {
-  const brands = await Brand.find({}) //.populate(`products`);
+  const brands = await Brand.find({}).populate(`supplier`);
   return brands;
 };
 
