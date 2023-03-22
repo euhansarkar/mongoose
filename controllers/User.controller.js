@@ -5,6 +5,7 @@ const {
 const bcrypt = require(`bcryptjs`);
 const comparePassword = require(`../models/User.model`);
 const generateToken = require("../utils/token");
+const { model } = require("mongoose");
 
 module.exports.signUp = async (req, res, next) => {
   try {
@@ -76,3 +77,20 @@ module.exports.login = async (req, res, next) => {
     });
   }
 };
+
+module.exports.getMe = async(req, res, next) => {
+  try {
+
+    const user = await findUserByEmailService(req.user?.email)
+    res.status(200).json({
+      status: `success`,
+      data: user
+    })
+
+  } catch (error) {
+    res.status(500).json({
+      status: `failed`,
+      error
+    })
+  }
+}
